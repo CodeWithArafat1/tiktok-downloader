@@ -46,7 +46,7 @@ const Hero = () => {
     setIsPlaying(false);
 
     try {
-      const res = await axios.get(`https://tiktok-downloader-backend-jet.vercel.app/api/tiktok/download?url=${url}`);
+      const res = await axios.get(`/api/tiktok/download?url=${url}`);
       if (res.data.success) {
         setData(res.data.data);
       }
@@ -74,7 +74,7 @@ const Hero = () => {
     }
 
     try {
-      const response = await fetch(`https://tiktok-downloader-backend-jet.vercel.app/api/tiktok/stream?url=${encodeURIComponent(targetUrl)}`);
+     const response = await fetch(`/api/tiktok/stream?url=${encodeURIComponent(targetUrl)}`);
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
