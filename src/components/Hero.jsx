@@ -2,10 +2,9 @@ import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { Search, Loader2, Play, Pause, Music, Download, Image as ImageIcon, ExternalLink, User, Eye, Heart, MessageCircle } from 'lucide-react';
 
-// ⚠️ জরুরি: এখানে আপনার Vercel-এ ডিপ্লয় করা ব্যাকএন্ডের লিংকটি বসান
-// উদাহরণ: "https://tiktok-downloader-backend.vercel.app"
-// (লিংকের শেষে '/' দেবেন না)
-const BACKEND_URL = "https://tiktok-downloader-backend-git-main-arafat-nills-projects.vercel.app";
+
+// const BACKEND_URL = "http://localhost:5000";
+const BACKEND_URL = "https://tiktok-downloader-backend-jet.vercel.app";
 
 const Hero = () => {
   const [url, setUrl] = useState('');
