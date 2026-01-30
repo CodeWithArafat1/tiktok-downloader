@@ -2,6 +2,11 @@ import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { Search, Loader2, Play, Pause, Music, Download, Image as ImageIcon, ExternalLink, User, Eye, Heart, MessageCircle } from 'lucide-react';
 
+// ⚠️ জরুরি: এখানে আপনার Vercel-এ ডিপ্লয় করা ব্যাকএন্ডের লিংকটি বসান
+// উদাহরণ: "https://tiktok-downloader-backend.vercel.app"
+// (লিংকের শেষে '/' দেবেন না)
+const BACKEND_URL = "https://tiktok-downloader-backend-git-main-arafat-nills-projects.vercel.app";
+
 const Hero = () => {
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
@@ -13,7 +18,6 @@ const Hero = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);
 
-  // Helper: বড় সংখ্যা ফরম্যাট করার জন্য (যেমন: 1.2M)
   const formatNumber = (num) => {
     if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
     if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
@@ -46,12 +50,14 @@ const Hero = () => {
     setIsPlaying(false);
 
     try {
-      const res = await axios.get(`/api/tiktok/download?url=${url}`);
+      // 👇 আপডেট: BACKEND_URL যুক্ত করা হয়েছে
+      const res = await axios.get(`${BACKEND_URL}/api/tiktok/download?url=${url}`);
       if (res.data.success) {
         setData(res.data.data);
       }
     } catch (err) {
-      setError('ভিডিও পাওয়া যায়নি। লিংকটি চেক করুন বা কিছুক্ষণ পর চেষ্টা করুন।');
+      console.error(err);
+      setError('ভিডিও পাওয়া যায়নি। লিংকটি চেক করুন বা কিছুক্ষণ পর চেষ্টা করুন।');
     } finally {
       setLoading(false);
     }
@@ -74,7 +80,11 @@ const Hero = () => {
     }
 
     try {
-     const response = await fetch(`/api/tiktok/stream?url=${encodeURIComponent(targetUrl)}`);
+      // 👇 আপডেট: BACKEND_URL যুক্ত করা হয়েছে
+      const response = await fetch(`${BACKEND_URL}/api/tiktok/stream?url=${encodeURIComponent(targetUrl)}`);
+      
+      if (!response.ok) throw new Error("Download failed");
+
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -86,6 +96,7 @@ const Hero = () => {
       window.URL.revokeObjectURL(blobUrl);
       setModalOpen(false);
     } catch (err) {
+      console.error("Stream failed, fallback to direct link", err);
       window.open(targetUrl, '_blank');
     } finally {
       setDownloading(false);
@@ -208,7 +219,7 @@ const Hero = () => {
                     {data.title || 'TikTok Video'}
                   </h3>
 
-                  {/* --- NEW STATS SECTION (Gradient Text) --- */}
+                  {/* --- STATS SECTION --- */}
                   <div className="flex flex-wrap gap-4 mt-4">
                       {/* Views */}
                       <div className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-lg border border-white/5">
@@ -315,7 +326,7 @@ const Hero = () => {
         )}
       </div>
 
-      {/* --- MODAL (Same as before) --- */}
+      {/* --- MODAL --- */}
       {modalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm transition-all">
             <div className="bg-[#0f172a] border border-white/10 rounded-3xl p-8 max-w-sm w-full shadow-2xl relative overflow-hidden">
