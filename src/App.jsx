@@ -12,7 +12,7 @@ function App() {
       
       {/* Simple Footer */}
       <footer className="text-center py-8 text-gray-600 text-sm border-t border-white/5 mt-10">
-        <p>© 2024 TikLoad. Made with ❤️ for Creators.</p>
+        <p>{new Date().getFullYear()} TikLoad. Made with Arafat Nill ❤️ for Creators.</p>
       </footer>
     </div>
   );
