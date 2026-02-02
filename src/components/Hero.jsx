@@ -3,8 +3,8 @@ import axios from 'axios';
 import { Search, Loader2, Play, Pause, Music, Download, Image as ImageIcon, ExternalLink, User, Eye, Heart, MessageCircle, Youtube, Facebook, Instagram, Video } from 'lucide-react';
 
 
-const BACKEND_URL = "http://localhost:5000";
-// const BACKEND_URL = "https://tiktok-downloader-backend-jet.vercel.app";
+// const BACKEND_URL = "http://localhost:5000";
+const BACKEND_URL = "https://tiktok-downloader-backend-jet.vercel.app";
 
 const Hero = () => {
   const [activeTab, setActiveTab] = useState('tiktok');
